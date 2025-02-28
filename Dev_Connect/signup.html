@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevConnect - Authentication</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        
+           
+        }
+
+        .form {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            margin: 1rem;
+            z-index: 10;
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2563eb;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-title {
+            color: #2563eb;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .input-container {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .input-container input,
+        .input-container select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        .input-container input:focus,
+        .input-container select:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        .input-container label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #4b5563;
+            font-weight: 500;
+        }
+
+        .submit {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .submit:hover {
+            background-color: #1d4ed8;
+        }
+
+        .submit.authenticating {
+            background-color: #93c5fd;
+            cursor: not-allowed;
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #6b7280;
+        }
+
+        .signup-link a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+
+      
+
+        .circle {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle, rgba(173, 216, 230, 0.8), rgba(173, 216, 230, 0.1));
+            border-radius: 50%;
+            opacity: 0.6;
+            filter: blur(12px);
+            animation: float 10s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-100px) scale(1.2); }
+            100% { transform: translateY(0px) scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <form class="form" id="authForm">
+        <div class="auth-header">
+            <div class="logo">DevConnect</div>
+            <h2 id="formTitle">Sign In</h2>
+        </div>
+        
+        <div class="input-container" id="nameField" style="display: none;">
+            <label>Full Name</label>
+            <input type="text" placeholder="Enter full name">
+        </div>
+
+        <div class="input-container">
+            <label>Email</label>
+            <input type="email" placeholder="Enter email" required>
+        </div>
+
+        <div class="input-container">
+            <label>Password</label>
+            <input type="password" placeholder="Enter password" required>
+        </div>
+
+        <div class="input-container">
+            <label>Select Role</label>
+            <select required>
+                <option value="">Choose your role</option>
+                <option value="DEVELOPER">Developer</option>
+                <option value="CLIENT">Client</option>
+            </select>
+        </div>
+
+        <button type="submit" class="submit" id="authButton">
+            Sign in
+        </button>
+
+        <p class="signup-link">
+            <a href="#" id="toggleForm">Need an account? Sign up</a>
+        </p>
+    </form>
+
+    <script>
+        let isLogin = true;
+        const toggleBtn = document.getElementById('toggleForm');
+        const formTitle = document.getElementById('formTitle');
+        const authButton = document.getElementById('authButton');
+        const nameField = document.getElementById('nameField');
+        const authForm = document.getElementById('authForm');
+
+        const BASE_API_URL = 'http://localhost:4000';
+
+        toggleBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            isLogin = !isLogin;
+            formTitle.textContent = isLogin ? 'Sign in to your account' : 'Create your account';
+            authButton.textContent = isLogin ? 'Sign in' : 'Sign up';
+            toggleBtn.textContent = isLogin ? 'Need an account? Sign up' : 'Already have an account? Sign in';
+            nameField.style.display = isLogin ? 'none' : 'block';
+        });
+
+        // In the <script> tag, update the submit event listener:
+        
+        authForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            authButton.textContent = 'Authenticating...';
+            authButton.classList.add('authenticating');
+            
+            // Authentication logic
+            const email = authForm.querySelector('input[type="email"]').value;
+            const password = authForm.querySelector('input[type="password"]').value;
+            const role = authForm.querySelector('select').value;
+            const name = authForm.querySelector('#nameField input')?.value;
+
+            try {
+                const endpoint = isLogin ? 'login' : 'signup';
+                const response = await fetch(`${BASE_API_URL}/user/${endpoint}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        name: !isLogin ? name : undefined,
+                        email,
+                        password,
+                        role
+                    }),
+                    credentials: 'include' // Important for cookies
+                });
+
+                let data;
+                try {
+                    data = await response.json(); // Read response once
+                } catch (err) {
+                    throw new Error("Invalid JSON response from server");
+                }
+            
+                if (response.ok) {
+                    if (data.token) {
+                        localStorage.setItem('token', data.token); // Store token if present
+                        console.log('Token stored in localStorage');
+                    }
+                    window.location.href = 'dashboard.html';
+                } else {
+                    throw new Error(data.message || 'Authentication failed');
+                }
+            } catch (error) {
+                console.error('Authentication error:', error);
+                authButton.textContent = isLogin ? 'Sign in' : 'Sign up';
+                authButton.classList.remove('authenticating');
+                // Add error message display
+                alert(error.message || 'Authentication failed');
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            // If token exists, user is already logged in
+            window.location.href = 'dashboard.html';
+        }
+    });
+
+
+
+    const numCircles = 15;
+        const colors = ["#a0c4ff", "#bde0fe", "#ffafcc", "#ffc8dd", "#cdb4db"];
+
+        for (let i = 0; i < numCircles; i++) {
+            let circle = document.createElement("div");
+            circle.classList.add("circle");
+
+            // Random size and position
+            let size = Math.random() * 50 + 30;
+            circle.style.width = `${size}px`;
+            circle.style.height = `${size}px`;
+            circle.style.left = `${Math.random() * window.innerWidth}px`;
+            circle.style.top = `${Math.random() * window.innerHeight}px`;
+            circle.style.background = `radial-gradient(circle, ${colors[Math.floor(Math.random() * colors.length)]}, transparent)`;
+
+            document.body.appendChild(circle);
+
+            // Random floating animation speed
+            let duration = Math.random() * 5 + 5;
+            circle.style.animationDuration = `${duration}s`;
+        }
+
+        // Move circles with mouse effect
+        document.addEventListener("mousemove", (e) => {
+            document.querySelectorAll(".circle").forEach(circle => {
+                let moveX = (e.clientX / window.innerWidth - 0.5) * 40;
+                let moveY = (e.clientY / window.innerHeight - 0.5) * 40;
+                circle.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            });
+        });
+
+  
+    </script>
+</body>
+</html>

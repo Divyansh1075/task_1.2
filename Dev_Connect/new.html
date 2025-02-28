@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevConnect</title>
+    <link rel="icon" type="image/png" href="images/Screenshot 2025-02-08 141119.png">
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            position: relative;  /* Add this */
+    overflow-x: hidden; /* Add this to prevent horizontal scrolling */
+            /* background: repeating-linear-gradient(
+    45deg,
+    #ff6f61,
+    #ff6f61 10px,
+    #ff9a8b 10px,
+    #ff9a8b 20px
+  ); */
+
+            /* background-color: #f9fafb; */
+            
+	/* height: 100vh; */
+	width: 100vw;
+    /* background: radial-gradient(#fff,#d3e9e9,#9fbddd) !important; */
+}
+    /* Add this to your existing CSS in new.html */
+        #particles-js {
+            position: fixed;  /* Changed from absolute to fixed */
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;  /* This ensures the particles stay behind other content */
+            background: #ffffff;  /* Or any background color you prefer */
+        }
+
+        /* Navigation */
+        nav {
+            background: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #666;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #333;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-primary {
+            background-color: #4f46e5;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #4338ca;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: transparent;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .hero-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 58px;
+            color: #333;
+            margin-bottom: 30px;
+            padding-top: 160px;
+            
+
+        }
+
+        .hero h1 span {
+            color: #4f46e5;
+            display: block;
+            margin-top: 10px;
+        }
+
+        .hero p {
+            color: #666;
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 20px;
+            background: transparent;
+        }
+
+        .features-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .features-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .features-header h2 {
+            color: #4f46e5;
+            text-transform: uppercase;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .features-header p {
+            font-size: 30px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .feature-card {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            background: #f3f4f6;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4f46e5;
+        }
+
+        .feature-content h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .feature-content p {
+            color: #666;
+        }
+
+        /* Search Section */
+        .search-section {
+            padding: 60px 20px;
+            background: #f9fafb;
+        }
+
+        .search-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .search-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .search-header h2 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .search-header p {
+            color: #666;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tag {
+            background: #f3f4f6;
+            padding: 6px 12px;
+            border-radius: 20px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .talent-match {
+            padding: 50px;
+        }
+        .steps-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .step {
+            background: #eef7fd;
+            border-radius: 10px;
+            padding: 20px;
+            width: 300px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .step h2 {
+            font-size: 1.2em;
+            color: #333;
+        }
+        .step-box {
+            background: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        .title {
+            font-weight: bold;
+            color: #007bff;
+            background: #e3f2fd;
+            padding: 8px;
+            border-radius: 5px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9em;
+        }
+        .confetti {
+            background: url('confetti.png') no-repeat center/cover;
+        }
+        .slack {
+            background: url('slack.png') no-repeat center/cover;
+        }
+
+        /* Add this to your existing CSS */
+.faq-item {
+    background:white;
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.question {
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.question span {
+    transition: transform 0.3s ease;
+}
+
+.answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    padding: 0 10px;
+}
+
+.faq-item.active .answer {
+    max-height: 200px;
+    margin-top: 10px;
+}
+
+.faq-item.active .question span {
+    transform: rotate(180deg);
+}
+
+/* Footer Styles */
+footer {
+    background: #1A1A2E;
+    color: white;
+    padding: 50px 20px;
+    font-family: Arial, sans-serif;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: auto;
+    flex-wrap: wrap;
+    height: 200px;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 250px;
+    margin-bottom: 20px;
+}
+
+.footer-section h2 {
+    color: #4f46e5;
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+.footer-section p {
+    color: #ddd;
+    line-height: 1.5;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin: 8px 0;
+}
+
+.footer-section ul li a {
+    color: #bbb;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+    color: #4f46e5;
+}
+
+/* Social Media Icons */
+.social-icons {
+    display: flex;
+    gap: 15px;
+}
+
+.social-icons a {
+    color: white;
+    font-size: 24px;
+    transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+    color: #4f46e5;
+}
+
+/* Footer Bottom */
+.footer-bottom {
+    text-align: center;
+    padding: 15px 0;
+    background: #0F3460;
+    margin-top: 30px;
+}
+
+.footer-bottom p {
+    color: #ccc;
+    font-size: 14px;
+}
+
+/* From Uiverse.io by ahmed150up2 */ 
+.card {
+  display: flex;
+  height: 70px;
+  width: 240px;
+}
+
+.card svg {
+  position: absolute;
+  display: flex;
+  width: 60%;
+  height: 100%;
+  font-size: 24px;
+  font-weight: 700;
+  opacity: 1;
+  transition: opacity 0.25s;
+  z-index: 2;
+  cursor: pointer;
+}
+
+.card .social-link1,.card .social-link2,.card .social-link3,.card .social-link4 {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 25%;
+  color: whitesmoke;
+  font-size: 24px;
+  text-decoration: none;
+  transition: 0.25s;
+  border-radius: 50px;
+}
+
+.card svg {
+  transform: scale(1);
+}
+
+.card .social-link1:hover {
+  background-color: #1a1e22;
+  animation: bounce_613 0.4s linear;
+}
+
+.card .social-link2:hover {
+  background-color: #0a66c2;
+  animation: bounce_613 0.4s linear;
+}
+
+.card .social-link3:hover {
+  background-color: #0059f7;
+  animation: bounce_613 0.4s linear;
+}
+
+.card .social-link4:hover {
+  background-color: #1d4292;
+  animation: bounce_613 0.4s linear;
+}
+
+@keyframes bounce_613 {
+  40% {
+    transform: scale(1.4);
+  }
+
+  60% {
+    transform: scale(0.8);
+  }
+
+  80% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .search-box {
+                flex-direction: column;
+            }
+
+            .mobile-menu {
+                display: none;
+                width: 100%;
+                background: white;
+                padding: 20px;
+            }
+
+            .mobile-menu.active {
+                display: block;
+            }
+
+            .mobile-menu a {
+                display: block;
+                padding: 10px 0;
+                color: #666;
+                text-decoration: none;
+                border-bottom: 1px solid #eee;
+            }
+        }
+
+        .custom-cursor {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    background-color: #4f46e5;
+    border-radius: 50%;
+    pointer-events: none;
+    transition: transform 0.15s ease-out, background-color 0.3s;
+    transform: translate(-50%, -50%) scale(1);
+    z-index: 9999;
+}
+
+button:hover ~ .custom-cursor {
+    background-color: #ffcc00;
+    transform: scale(1.5);
+}
+
+        
+    </style>
+</head>
+<body >
+    <div id="particles-js"></div>
+    <div class="custom-cursor"></div>
+
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo" onclick="location.href='new.html';">
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                DevConnect
+            </div>
+            <div class="nav-links">
+                <a href="HIW.html">HOW IT WORKS</a>
+                <a href="ContactUs.html">CONTACT US</a> 
+                <button class="btn btn-primary" onclick="location.href='signup.html';">Register Now!</button>
+            </div>
+            <button class="mobile-menu-btn">☰</button>
+        </div>
+    </nav>
+
+    <main>
+
+        <!-- Hero Section -->
+    <div style="display: flex; width: 80%; margin: auto; margin-top: -50px;">
+        <section class="hero" style="flex: 1; display: flex; justify-content: center; align-items: center; ">
+            <div class="hero-container" style="border: 10x solid white;background:white;border-radius: 500px;">
+                <h1>
+                    Find the Right Developer
+                    <span>for Your Project</span>
+                </h1>
+                <p>Connect with skilled developers, share your project ideas, and get expert feedback to bring your vision to life.</p>
+                <button class="btn btn-primary" onclick="location.href='signup.html';">Get Started</button>
+            </div>
+        </section>
+    
+        <section style="flex: 1; display: flex; justify-content: center; align-items: center;; ">
+            <img class="image" src="./images/Picture1-removebg-preview.png" alt="Hero Image" style="max-width: 70%; height: auto; background: transparent; font-size: larger;">
+        </section>
+    </div>
+    
+
+    <section class="talent-match">
+        <h1 style="text-align: center; font-weight: bold; margin-bottom: 50px; font-size: 3em;">Find your talent match</h1>
+        <div class="steps-container" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; padding: 0 310px;">
+            <div class="step" style="padding: 30px; margin: 10px; width: 400px;">
+                <h2 style="text-align: center;font-size:larger;">Step 1</h2>
+                <div class="step-box confetti">
+                    <img src="./images/talent_img1.svg" alt="User" style="width: 100%; height: 250px; object-fit: contain;">
+                </div>
+                <h3>Tell us your requirements</h3>
+                <p>Let's get on a call to discuss your development needs in more detail so we can offer you the best service.</p>
+            </div>
+            
+            <div class="step" style="padding: 30px; margin: 10px; width: 400px;">
+                <h2 style="text-align: center;font-size:larger;">Step 2</h2>
+                <div class="step-box confetti">
+                    <img src="./images/talent_img2-1.webp" alt="User" style="width: 100%; height: 250px; object-fit: contain;">
+                </div>
+                <h3>We'll find your perfect fit</h3>
+                <p>Receive a shortlist of candidates within 24h. Get on a call with the talents to identify your perfect match.</p>
+            </div>
+            
+            <div class="step" style="padding: 30px; margin: 10px; width: 400px;"> 
+                <h2 style="text-align: center;font-size:larger;">Step 3</h2>
+                <div class="step-box slack">
+                    <img src="./images/talent_img3-1.webp" alt="Slack Workspace" style="width: 100%; height: 250px; object-fit: contain;">
+                </div>
+                <h3>Start your risk-free trial</h3>
+                <p>Hire LatAm developers on a 1-week risk-free trial and get to work via a dedicated Slack workspace!</p>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="features-container">
+            <div class="features-header">
+                <h2>Features</h2>
+                <p>Everything you need to find the perfect match</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <div class="feature-content">
+                        <h3>Smart Project Matching</h3>
+                        <p>AI-powered matching system connects you with the right developers.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💬</div>
+                    <div class="feature-content">
+                        <h3>Real-time Chat</h3>
+                        <p>Communicate directly with developers in real-time.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">👥</div>
+                    <div class="feature-content">
+                        <h3>Expert Feedback</h3>
+                        <p>Get valuable feedback from experienced developers.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    </main>
+
+
+    <!-- FAQ Section -->
+    <section class="faq-section" style="background: white; padding: 80px 20px; width: 100%;">
+        <h1 style="text-align: center; font-size: 2.5em; margin-bottom: 40px;">Frequently Asked Questions</h1>
+        
+        <div class="faq-container" style="max-width: 800px; margin: 0 auto; background: whitesmoke; border-radius: 20px; padding: 40px;">
+            <div class="faq-item">
+                <div class="question" onclick="toggleAnswer(this)">
+                    What is DevConnect? <span>▼</span>
+                </div>
+                <div class="answer">
+                    DevConnect is a platform where users can post projects, discover freelancers and developers, and chat with them.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="question" onclick="toggleAnswer(this)">
+                    How do I hire a developer? <span>▼</span>
+                </div>
+                <div class="answer">
+                    You can post a project, browse developers, and connect with them to discuss your requirements.
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="question" onclick="toggleAnswer(this)">
+                    Is DevConnect free to use? <span>▼</span>
+                </div>
+                <div class="answer">
+                    Yes, signing up and posting projects is free. Developers may charge for their services.
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section about">
+                <h2>DevConnect</h2>
+                <p>Connecting businesses with top freelancers and developers worldwide. Find the right talent and bring your project to life.</p>
+            </div>
+            
+            <div class="footer-section links">
+                <h2>Quick Links</h2>
+                <ul>
+                    <li><a href="HIW.html">How It Works</a></li>
+                    <li><a href="new.html">Get Started</a></li>
+                    <li><a href="./ContactUs.html">Contact Us</a></li>
+                </ul>
+            </div>
+    
+            <div class="footer-section social">
+                <h2>Follow Us</h2>
+                <!-- <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                </div> -->
+                <!-- From Uiverse.io by ahmed150up2 --> 
+            <div class="card">
+                <a class="social-link1" href="https://github.com/login">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="#fff" height="1em" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg>
+                </a>
+                <a class="social-link2" href="https://www.linkedin.com/login">
+                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512" fill="#fff"><path d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 142.3V448z"></path></svg>          </a>
+                <!-- <a class="social-link3">
+                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512" fill="#fff"><path d="M232 237.2c31.8-15.2 48.4-38.2 48.4-74 0-70.6-52.6-87.8-113.3-87.8H0v354.4h171.8c64.4 0 124.9-30.9 124.9-102.9 0-44.5-21.1-77.4-64.7-89.7zM77.9 135.9H151c28.1 0 53.4 7.9 53.4 40.5 0 30.1-19.7 42.2-47.5 42.2h-79v-82.7zm83.3 233.7H77.9V272h84.9c34.3 0 56 14.3 56 50.6 0 35.8-25.9 47-57.6 47zm358.5-240.7H376V94h143.7v34.9zM576 305.2c0-75.9-44.4-139.2-124.9-139.2-78.2 0-131.3 58.8-131.3 135.8 0 79.9 50.3 134.7 131.3 134.7 61.3 0 101-27.6 120.1-86.3H509c-6.7 21.9-34.3 33.5-55.7 33.5-41.3 0-63-24.2-63-65.3h185.1c.3-4.2.6-8.7.6-13.2zM390.4 274c2.3-33.7 24.7-54.8 58.5-54.8 35.4 0 53.2 20.8 56.2 54.8H390.4z"></path></svg>
+                </a> -->
+                <a class="social-link4" href="https://www.facebook.com/login.php/">
+                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512" fill="#fff"><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"></path></svg>
+                </a>
+            </div>             
+            </div>
+        </div>
+    
+        <div class="footer-bottom">
+            <p>&copy; 2025 DevConnect | All rights reserved.</p>
+        </div>
+    </footer>
+    
+    
+
+    <!-- Search Section -->
+    <!-- <section class="search-section">
+        <div class="search-container">
+            <div class="search-header">
+                <h2>Find Projects</h2>
+                <p>Search through hundreds of projects looking for developers</p>
+            </div>
+            <div class="search-box">
+                <input type="text" placeholder="Search projects..." class="search-input">
+                <button class="btn btn-primary">Search</button>
+            </div>
+            <div class="tags">
+                <span class="tag">Node.js</span>
+                <span class="tag">Express</span>
+                <span class="tag">MongoDB</span>
+                <span class="tag">Socket.io</span>
+            </div>
+        </div>
+    </section> -->
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const nav = document.querySelector('nav');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            const mobileMenu = document.querySelector('.mobile-menu');
+            if (!mobileMenu) {
+                const menu = document.createElement('div');
+                menu.className = 'mobile-menu';
+                menu.innerHTML = `
+                    <a href="#">REGISTER NOW!</a>
+                    <a href="#">HOW IT WORKS</a>
+                    <a href="#">CONTACT US</a>
+                    
+                `;
+                nav.appendChild(menu);
+            } else {
+                mobileMenu.classList.toggle('active');
+            }
+        });
+
+
+       /* Replace your existing toggleAnswer function with this: */
+function toggleAnswer(element) {
+    // Get the parent faq-item
+    const faqItem = element.parentElement;
+    
+    // Close all other FAQ items
+    document.querySelectorAll('.faq-item').forEach(item => {
+        if (item !== faqItem) {
+            item.classList.remove('active');
+        }
+    });
+    
+    // Toggle the active class on the clicked item
+    faqItem.classList.toggle('active');
+}
+
+particlesJS("particles-js", {
+      particles: {
+        number: { value: 100 },
+        size: { value: 3 },
+        move: { speed: 1 },
+        line_linked: { enable: true, color: "#0d0c0c" }
+      }
+    });
+
+
+    const cursor = document.querySelector(".custom-cursor");
+
+document.addEventListener("mousemove", (e) => {
+    cursor.style.left = `${e.clientX}px`;
+    cursor.style.top = `${e.clientY}px`;
+});
+
+document.querySelectorAll("button").forEach(button => {
+    button.addEventListener("mouseenter", () => {
+        cursor.style.transform = "scale(1.5)";
+        cursor.style.backgroundColor = "#ffcc00";
+    });
+    button.addEventListener("mouseleave", () => {
+        cursor.style.transform = "scale(1)";
+        cursor.style.backgroundColor = "#4f46e5";
+    });
+});
+
+    </script>
+    
+</body>
+</html>
